@@ -21,6 +21,13 @@ COPY settings.xml download.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
 
 RUN /tmp/download.sh
 
+##### SQL SERVER SUPPORT #####
+
+COPY download-sqlserver.sh mssql-jdbc-*.jar /tmp/
+
+RUN chmod +x /tmp/download-sqlserver.sh
+RUN /tmp/download-sqlserver.sh
+
 
 ##### FINAL IMAGE #####
 
