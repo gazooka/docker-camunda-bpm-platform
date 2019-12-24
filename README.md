@@ -1,3 +1,15 @@
+# Camunda BPM Platform Docker Images with SQL Server support
+
+Docker image with SQL Server JDBC driver support included. Run locally via:
+
+```
+docker run -d --name camunda -p 8080:8080 -e DB_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver -e DB_URL=jdbc:sqlserver://localhost;databaseName=camunda -e DB_USERNAME=camunda -e DB_PASSWORD=camunda camunda
+```
+
+Set the JDBC URL and database username and password as required for your environment.
+
+# Original README from forked repo
+
 # Camunda BPM Platform Docker Images
 [![Build Status](https://travis-ci.com/camunda/docker-camunda-bpm-platform.svg?branch=next)](https://travis-ci.com/camunda/docker-camunda-bpm-platform)
 
