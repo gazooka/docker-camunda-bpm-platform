@@ -53,7 +53,7 @@ to enable authentication for the Rest-API.
 
 The following tag schema is used. The user has the choice between different
 application server distributions of Camunda BPM platform. `${DISTRO}` can
-either be `tomcat` or `wildfly`. If no `${DISTRO}` is specified the
+either be `tomcat`, `wildfly` or `run`. If no `${DISTRO}` is specified the
 `tomcat` distribution is used.
 
 - `latest`, `${DISTRO}-latest`: Alywas the latest minor release of Camunda BPM
@@ -229,9 +229,9 @@ version and distribution.
 ### Build a released version
 
 To build a community image specify the `DISTRO` and `VERSION` build
-argument. Possible values for `DISTRO` are `tomcat` and `wildfly` (if the
+argument. Possible values for `DISTRO` are `tomcat`, `wildfly` and `run` (if the
 Camunda BPM platform version already supported it). The `VERSION` is the
-Camunda BPM platform version you want to build, i.e. `7.10.0`.
+Camunda BPM platform version you want to build, i.e. `7.12.0`.
 
 ```
 docker build -t camunda-bpm-platform \
@@ -275,6 +275,23 @@ docker build -t camunda-bpm-platform \
   .
 ```
 
+### Build when behind a proxy
+
+The following arguments can be passed to set proxy settings to Maven: `MAVEN_PROXY_HOST`, `MAVEN_PROXY_PORT`, `MAVEN_PROXY_USER`, `MAVEN_PROXY_PASSWORD`
+
+Example for a released version of a community edition:
+
+```
+docker build -t camunda-bpm-platform \
+  --build-arg DISTRO=${DISTRO} \
+  --build-arg VERSION=${VERSION} \
+  --build-arg MAVEN_PROXY_HOST=${PROXY_HOST} \
+  --build-arg MAVEN_PROXY_PORT=${PROXY_PORT} \
+  --build-arg MAVEN_PROXY_USER=${PROXY_USER} \
+  --build-arg MAVEN_PROXY_PASSWORD=${PROXY_PASSWORD} \
+  .
+```
+
 ## Use Cases
 
 ### Change Configuration Files
@@ -286,7 +303,6 @@ container.  For example if you want to change the `bpm-platform.xml` on tomcat:
 docker run -d --name camunda -p 8080:8080 \
            -v $PWD/bpm-platform.xml:/camunda/conf/bpm-platform.xml \
            camunda/camunda-bpm-platform:latest
-
 ```
 
 
@@ -345,13 +361,12 @@ docker run -d --name camunda -p 8080:8080 \
 ```
 
 
-## Branching Model (not applicable)
+## Branching Model
 
 Branches and their roles in this repository:
 
-- `next` is the branch where new features go into (default branch)
-- `master` should get only changes needed to support the current `master` of [https://github.com/camunda/camunda-bpm-platform](camunda-bpm-platform) repositories
-- `7.x` branches get created from `master` when a Camunda BPM minor release happened and only then `next` is merged into `master` once
+- `next` (default branch) is the branch where new features and bugfixes needed to support the current `master` of [camunda-bpm-platform repo](https://github.com/camunda/camunda-bpm-platform) go into
+- `7.x` branches get created from `next` when a Camunda BPM minor release happened and only receive backports of bugfixes when absolutely necessary
 
 
 ## License

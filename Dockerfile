@@ -8,16 +8,22 @@ ARG EE=false
 ARG USER
 ARG PASSWORD
 
+ARG MAVEN_PROXY_HOST
+ARG MAVEN_PROXY_PORT
+ARG MAVEN_PROXY_USER
+ARG MAVEN_PROXY_PASSWORD
+
 ARG JMX_PROMETHEUS_VERSION=0.12.0
 
 RUN apk add --no-cache \
+        bash \
         ca-certificates \
         maven \
         tar \
         wget \
         xmlstarlet
 
-COPY settings.xml download.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
+COPY settings.xml download.sh camunda-run.sh camunda-tomcat.sh camunda-wildfly.sh  /tmp/
 
 RUN /tmp/download.sh
 
@@ -62,11 +68,12 @@ EXPOSE 8080 8000 9404
 RUN apk add --no-cache \
         bash \
         ca-certificates \
+        curl \
         openjdk11-jre-headless \
         tzdata \
         tini \
         xmlstarlet \
-    && wget -O /usr/local/bin/wait-for-it.sh \
+    && curl -o /usr/local/bin/wait-for-it.sh \
       "https://raw.githubusercontent.com/vishnubob/wait-for-it/a454892f3c2ebbc22bd15e446415b8fcb7c1cfa4/wait-for-it.sh" \
     && chmod +x /usr/local/bin/wait-for-it.sh
 
