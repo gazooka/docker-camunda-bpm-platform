@@ -1,7 +1,7 @@
 #!/bin/sh -ex
 
 # sql server jdbc driver
-MSSQL_VERSION=8.4.0
+MSSQL_VERSION=8.4.1
 JRE_VERSION=11
 mvn install:install-file -Dfile=/tmp/mssql-jdbc-${MSSQL_VERSION}.jre${JRE_VERSION}.jar -DgroupId=com.microsoft.sqlserver -DartifactId=mssql-jdbc -Dversion=${MSSQL_VERSION} -Dpackaging=jar
 
